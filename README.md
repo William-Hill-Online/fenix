@@ -12,22 +12,22 @@ Each frame is encoded as a JSON array where the first element is always a Number
 
 |Operation Code|Operation Name|Descriptionn|Arguments|Example|
 |--------------|--------------|------------|---------|-------|
-| 1   | FenixCreateEntityCmd | Create a new Key/Value entity into the cache | entityId: String, data: Map\[String, Any\] |\[1,"OB_EV54952","{"username":"OB_EV54952noir","password":"secret"}"\] |
+| 1   | FenixCreateEntityCmd | Create a new Key/Value entity into the cache | entityId: String, data: Map\[String, Any\] |\[1,"OB_EV54952","{"username":"OB_EV54952","password":"secret"}"\] |
 | 2   | FenixUpdateCmd | Update a specific field of an entity | entityId: String, field: String, value: Any | \[2,"OB_EV54952","password","newsecret"\]   |
 | 3   | FenixRemoveCmd | Remove a Key/Value entity from the cache | entityId: String | \[3,"OB_EV54952"\] |
 | 4   | FenixAddCmd    | Add a value to a List field of an entity. If the field is not a list after this operation it is automatically converted into a Seq\[Any\] | entityId: String, field: String, values: Set\[Any\] | \[4,"OB_EV54952","cars",\["DJR0707","CH0036"\]\] |
 | 5   | FenixDelCmd    | Remove a value from a List field of the specified entity | entityId: String, field: String, values: Set\[Any\] | \[5,"OB_EV54952","cars",\["CH0036"\]\] |
 | 6   | FenixClearCmd  | Clear the Value of a specific entity. Differently from FenixRemoveCmd, this operation set the value of the entity to an empty map but it doesn't remove the entity | entityId: String | \[6,"OB_EV54952"\] |
-| 7   | FenixMergeEntityCmd  | Merges the actual entity with the provided Key/Value map. Whether to preserve or not former keys is optional. | entityId: String, data: Map\[String, Any\], preserve: Boolean | \[7,"OB_EV54952",{"username":"OB_EV54952noir","password":"anothernewsecret"}, false\] |
+| 7   | FenixMergeEntityCmd  | Merges the actual entity with the provided Key/Value map. Whether to preserve or not former keys is optional. | entityId: String, data: Map\[String, Any\], preserve: Boolean | \[7,"OB_EV54952",{"username":"OB_EV54952","password":"anothernewsecret"}, false\] |
 | 10  | FenixGetEntityReq  | Given the entityId returns the value associated to that entityId | entityId: String | \[10,"OB_EV54952"\] |
-| 11  | FenixGetEntityResp | Is the response message for request operation code 10 | offset: Long, entityId: String, data: Map\[String, Any\] | [11,1001,"OB_EV54952","{"username":"OB_EV54952noir","password":"secret"}"\] |
+| 11  | FenixGetEntityResp | Is the response message for request operation code 10 | offset: Long, entityId: String, data: Map\[String, Any\] | [11,1001,"OB_EV54952","{"username":"OB_EV54952","password":"secret"}"\] |
 | 12  | FenixGetEntityFieldReq | Request the value of a specific field of an entity | entityId: String, field: String | \[12,"OB_EV54952","password"\] |
 | 13  | FenixGetEntityFieldResp | Response message for oepration code 12 | offset: Long, entityId: String, field: String, value: Any | \[13,1002,"OB_EV54952","password","secret"\] |
 | 20  | FenixTopicSubscribe | Subscribes for event associated to a specific topic. A topic can be an entityId or a field of an entityId (entityId/field) | topic: String | \[20,"OB_EV54952"\] or \[20,"OB_EV54952/password"\] |
 | 21  | FenixTopicSubscribeAck |Ackowledge message associated to a subscribe request op. code 20 | topic: String | \[21,"OB_EV54952"\] or \[21,"OB_EV54952/password"\] |
 | 22  | FenixTopicUnsubscribe | Remove the subscription from a topic | topic: String | \[22,"OB_EV54952"\] or \[22,"OB_EV54952/password"\] |
 | 23  | FenixTopicUnsubscribeAck | Ackowledge message associated to a unsubscribe request op. code 21 | topic: String | \[23,"OB_EV54952"\] or \[23,"OB_EV54952/password"\] |
-| 101 | FenixCreateEntityEvent | Notification event associated to command op. code 1 | offset: Long, entityId: String, data: Map\[String, Any\] |\[101,1002,"OB_EV54952","{"username":"OB_EV54952noir","password":"secret"}"\] |
+| 101 | FenixCreateEntityEvent | Notification event associated to command op. code 1 | offset: Long, entityId: String, data: Map\[String, Any\] |\[101,1002,"OB_EV54952","{"username":"OB_EV54952","password":"secret"}"\] |
 | 102 | FenixUpdateEvent | Notification event associated to command op. code 2 | offset: Long, entityId: String, field: String, value: Any | \[102,1003,"OB_EV54952","password","newsecret"\]   |
 | 103 | FenixRemoveEvent | Notification event associated to command op. code 3 | offset: Long, entityId: String | \[103,1004,"OB_EV54952"\] |
 | 104 | FenixAddEvent    | Notification event associated to command op. code 4 | offset: Long, entityId: String, field: String, values: Set\[Any\] | \[104,1005,"OB_EV54952","cars",\["DJR0707","CH0036"\]\] |
