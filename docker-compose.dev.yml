@@ -1,0 +1,77 @@
+version: '2'
+
+services:
+  cassandra:
+    image: cassandra:2.1.9
+    restart: unless-stopped
+    environment:
+      - CASSANDRA_LISTEN_ADDRESS=cassandra
+    expose:
+      - 7000
+      - 7001
+      - 7199
+      - 9042
+      - 9160
+    ports:
+      - 9160:9160
+      - 9042:9042
+
+  etcd:
+    image: quay.io/coreos/etcd:latest
+    restart: unless-stopped
+    command: -advertise-client-urls=http://0.0.0.0:2379 -listen-client-urls=http://0.0.0.0:2379
+    expose:
+      - 4001
+      - 2380
+      - 2379
+
+  fenix:
+    image: docker-registry.prod.williamhill.plc/martin.hatas/fenix:0.0.1-SNAPSHOT
+    restart: unless-stopped
+    expose:
+      - 2551
+      - 7777
+    environment:
+      - CASSANDRA=cassandra
+      - KAFKA=kafka
+    depends_on:
+      - etcd
+      - cassandra
+      - kafka
+
+  fenixDriver:
+    image: docker-registry.prod.williamhill.plc/martin.hatas/fenix:0.0.1-SNAPSHOT
+    restart: unless-stopped
+    expose:
+      - 2551
+    ports:
+      - 7777:7777
+    environment:
+      - CASSANDRA=cassandra
+      - KAFKA=kafka
+    depends_on:
+      - etcd
+      - cassandra
+      - kafka
+
+  kafka:
+    image: wurstmeister/kafka
+    restart: unless-stopped
+    environment:
+      - KAFKA_ADVERTISED_HOST_NAME=kafka
+      - KAFKA_ADVERTISED_PORT=9092
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+    ports:
+      - 9092:9092
+    expose:
+      - 9092
+    depends_on:
+      - zookeeper
+
+  zookeeper:
+    image: wurstmeister/zookeeper
+    restart: unless-stopped
+    ports:
+      - 2181:2181
+    expose:
+      - 2181

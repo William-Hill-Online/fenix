@@ -1,0 +1,80 @@
+zookeeper:
+  image: wurstmeister/zookeeper
+  expose:
+    - 2181
+  ports:
+    - "2181:2181"
+
+kafka:
+  image: wurstmeister/kafka:0.9.0.1
+  expose:
+    - 9092
+  ports:
+    - "9092:9092"
+  links:
+    - zookeeper:zk
+  environment:
+    KAFKA_ADVERTISED_HOST_NAME: 192.168.99.100
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+
+etcd:
+  image: quay.io/coreos/etcd:latest
+  command: -advertise-client-urls=http://0.0.0.0:2379 -listen-client-urls=http://0.0.0.0:2379
+  restart: always
+  expose:
+    - 4001
+    - 2380
+    - 2379
+
+cassandra:
+  image: cassandra:2.1.9
+  restart: always
+  expose:
+    - "7000"
+    - "7001"
+    - "7199"
+    - "9042"
+    - "9160"
+  ports:
+    - "9160:9160"
+    - "9042:9042"
+
+fenixDriver:
+  image: docker-registry.prod.williamhill.plc/martin.hatas/fenix:0.0.1-SNAPSHOT
+  restart: always
+  expose:
+    - "2551"
+  ports:
+    - "7777:7777"
+  environment:
+    - CASSANDRA=cassandra
+    - KAFKA=192.168.99.100
+  links:
+    - etcd
+    - cassandra
+    - kafka
+
+fenix:
+  image: docker-registry.prod.williamhill.plc/martin.hatas/fenix:0.0.1-SNAPSHOT
+  restart: always
+  expose:
+    - "2551"
+    - "7777"
+  environment:
+    - CASSANDRA=cassandra
+    - KAFKA=192.168.99.100
+  links:
+    - etcd
+    - cassandra
+    - kafka
+
+# haproxy:
+#   image: haproxy:latest
+#   restart: always
+#   ports:
+#     - "80:80"
+#   volumes:
+#     - "./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro"
+#   links:
+#     - fenix

@@ -1,0 +1,37 @@
+cassandra:
+  image: cassandra:2.1.9
+  restart: always
+  expose:
+    - "7000"
+    - "7001"
+    - "7199"
+    - "9042"
+    - "9160"
+  ports:
+    - "9160:9160"
+    - "9042:9042"
+
+fenixSeed:
+  image: docker-registry.prod.williamhill.plc/martin.hatas/fenix:0.0.1-SNAPSHOT
+  restart: always
+  expose:
+    - "2551"
+  ports:
+    - "7777:7777"
+  environment:
+    - FENIX_SERVERS=127.0.0.1:2551
+    - CASSANDRA=cassandra
+  links:
+    - cassandra
+
+fenix:
+  image: docker-registry.prod.williamhill.plc/martin.hatas/fenix:0.0.1-SNAPSHOT
+  restart: always
+  expose:
+    - "2551"
+  environment:
+    - FENIX_SERVERS=127.0.0.1:2551,seed:2551
+    - CASSANDRA=cassandra
+  links:
+    - fenixSeed:seed
+    - cassandra
