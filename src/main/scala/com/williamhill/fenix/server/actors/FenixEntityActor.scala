@@ -2,7 +2,7 @@ package com.williamhill.fenix.server.actors
 
 import java.net.URLDecoder
 
-import akka.actor.{ActorRef, Props}
+import akka.actor.{ ActorRef, Props }
 import akka.cluster.pubsub.DistributedPubSub
 import akka.cluster.pubsub.DistributedPubSubMediator._
 import akka.event.LoggingReceive
@@ -14,7 +14,6 @@ import scala.concurrent.duration.Duration
 import scala.util.Try
 
 class FenixEntityActor(updatesBeforeSnapshot: Long, passivation: Duration, output: Option[ActorRef], initialData: Map[String, Any]) extends PersistentActor with Passivation {
-
 
   val mediator = DistributedPubSub(context.system).mediator
 

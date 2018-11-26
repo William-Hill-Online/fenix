@@ -1,6 +1,6 @@
 package com.williamhill.fenix.server.channel.input
 
-import akka.actor.{ActorLogging, ActorRef, Props}
+import akka.actor.{ ActorLogging, ActorRef, Props }
 import akka.cluster.pubsub.DistributedPubSub
 import akka.cluster.pubsub.DistributedPubSubMediator.Publish
 import akka.event.LoggingReceive
@@ -10,7 +10,7 @@ import com.typesafe.scalalogging.LazyLogging
 import com.williamhill.fenix.server.util.KafkaUtil
 import com.williamhill.fenix.server.channel.SubscriptionsMap
 import com.williamhill.fenix.server.channel.converter._
-import com.williamhill.fenix.server.channel.messages.{ChannelSubscribe, ChannelSubscriptionMapReq, ChannelSubscriptionMapResp, ChannelUnsubscribe}
+import com.williamhill.fenix.server.channel.messages.{ ChannelSubscribe, ChannelSubscriptionMapReq, ChannelSubscriptionMapResp, ChannelUnsubscribe }
 import com.williamhill.fenix.server.messages._
 import rx.lang.scala.Observable
 

@@ -1,17 +1,17 @@
 package com.williamhill.fenix.server.channel.output
 
-import akka.actor.{Actor, ActorLogging, ActorRef, Kill, Props, ReceiveTimeout, Stash}
+import akka.actor.{ Actor, ActorLogging, ActorRef, Kill, Props, ReceiveTimeout, Stash }
 import akka.cluster.pubsub.DistributedPubSub
-import akka.cluster.pubsub.DistributedPubSubMediator.{Subscribe, SubscribeAck}
+import akka.cluster.pubsub.DistributedPubSubMediator.{ Subscribe, SubscribeAck }
 import akka.event.LoggingReceive
 import com.typesafe.config.Config
 import com.typesafe.scalalogging.LazyLogging
 import com.williamhill.fenix.server.util.ConfigUtil
 import com.williamhill.fenix.server.channel.SubscriptionsMap
 import com.williamhill.fenix.server.channel.converter.WHOGatewayConverter
-import com.williamhill.fenix.server.channel.messages.{ChannelSubscribe, ChannelSubscriptionMapReq, ChannelSubscriptionMapResp, ChannelUnsubscribe}
+import com.williamhill.fenix.server.channel.messages.{ ChannelSubscribe, ChannelSubscriptionMapReq, ChannelSubscriptionMapResp, ChannelUnsubscribe }
 import com.williamhill.fenix.server.messages._
-import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
+import org.apache.kafka.clients.producer.{ KafkaProducer, ProducerRecord }
 
 import scala.collection.JavaConversions._
 import scala.concurrent.duration._

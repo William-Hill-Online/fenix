@@ -28,7 +28,6 @@ case class FenixTopicUnsubscribeAck(topic: String) extends FenixMessage {
   override val entityId = topic
 }
 
-
 sealed trait FenixCmd extends FenixMessage {
   val entityId: String
 }
@@ -41,7 +40,6 @@ case class FenixClearCmd(entityId: String) extends FenixCmd
 case class FenixAddCmd(entityId: String, field: String, values: Seq[Any]) extends FenixCmd
 case class FenixDelCmd(entityId: String, field: String, values: Seq[Any]) extends FenixCmd
 
-
 sealed trait FenixEvent extends FenixMessage {
   val entityId: String
 }
@@ -53,8 +51,6 @@ case class FenixRemoveEvent(offset: Long, entityId: String, field: String) exten
 case class FenixClearEvent(offset: Long, entityId: String) extends FenixEvent
 case class FenixAddEvent(offset: Long, entityId: String, field: String, values: Seq[Any]) extends FenixEvent
 case class FenixDelEvent(offset: Long, entityId: String, field: String, values: Seq[Any]) extends FenixEvent
-
-
 
 sealed trait FenixQuery extends FenixMessage {
   val entityId: String

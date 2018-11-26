@@ -6,7 +6,7 @@ import java.nio.ByteBuffer
 
 import akka.util.ByteString
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 object FenixTcpClient {
   def main(args: Array[String]): Unit = {
@@ -14,6 +14,8 @@ object FenixTcpClient {
     val out = new DataOutputStream(socket.getOutputStream)
     val stdIn = new BufferedReader(new InputStreamReader(System.in))
     var userInput = ""
+
+    import ExecutionContext.Implicits.global
 
     Future {
       var position: Int = 0

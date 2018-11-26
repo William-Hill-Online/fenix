@@ -1,7 +1,7 @@
 package com.williamhill.fenix.server.es.trx
 
 import akka.util.ByteString
-import com.williamhill.fenix.server.messages.{FenixMessage, FenixSerializer}
+import com.williamhill.fenix.server.messages.{ FenixMessage, FenixSerializer }
 
 import scala.util.Try
 

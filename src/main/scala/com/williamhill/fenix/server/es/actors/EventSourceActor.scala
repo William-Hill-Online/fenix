@@ -1,6 +1,6 @@
 package com.williamhill.fenix.server.es.actors
 
-import akka.actor.{Actor, ActorLogging, ActorRef, Kill, Props}
+import akka.actor.{ Actor, ActorLogging, ActorRef, Kill, Props }
 import com.williamhill.fenix.server.es.EventSourceDefinition
 import com.williamhill.fenix.server.es.EventSourceDefinition
 

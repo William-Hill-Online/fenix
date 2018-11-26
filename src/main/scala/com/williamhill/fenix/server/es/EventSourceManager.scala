@@ -1,7 +1,7 @@
 package com.williamhill.fenix.server.es
 
-import akka.actor.{ActorRef, ActorSystem, PoisonPill}
-import akka.cluster.singleton.{ClusterSingletonManager, ClusterSingletonManagerSettings}
+import akka.actor.{ ActorRef, ActorSystem, PoisonPill }
+import akka.cluster.singleton.{ ClusterSingletonManager, ClusterSingletonManagerSettings }
 import com.typesafe.scalalogging.LazyLogging
 import com.williamhill.fenix.server.config.FenixConfig
 import com.williamhill.fenix.server.es.actors.EventSourceManagerActor

@@ -1,6 +1,6 @@
 package com.williamhill.fenix.server.actors
 
-import akka.actor.{Actor, ActorLogging, PoisonPill, ReceiveTimeout}
+import akka.actor.{ Actor, ActorLogging, PoisonPill, ReceiveTimeout }
 import akka.cluster.sharding.ShardRegion.Passivate
 
 trait Passivation extends ActorLogging { me: Actor =>

@@ -19,7 +19,7 @@ class FenixConfig(config: Config) {
   val shardSize = config.getInt("fenix.cluster.shardSize")
 
   val timeoutBootstrap = FiniteDuration(config.getDuration("fenix.timeout.bootstrap").toNanos(), TimeUnit.NANOSECONDS)
-  
+
   val tcpPort = config.getInt("fenix.tcp.port")
   val tcpHost = config.getString("fenix.tcp.host")
 

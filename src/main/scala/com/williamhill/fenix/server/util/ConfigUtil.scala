@@ -1,8 +1,8 @@
 package com.williamhill.fenix.server.util
 
 import java.net.InetAddress
-
-import com.typesafe.config.{Config, ConfigValueFactory}
+import collection.JavaConverters._
+import com.typesafe.config.{ Config, ConfigValueFactory }
 
 object ConfigUtil {
 
@@ -14,7 +14,7 @@ object ConfigUtil {
         val port = parts(1)
         host + ":" + port
       }
-      config.withValue(property, ConfigValueFactory.fromIterable(addresses.map(trx)))
+      config.withValue(property, ConfigValueFactory.fromIterable(addresses.map(trx).asJava))
     } else
       config
 
@@ -26,11 +26,11 @@ object ConfigUtil {
   private val localhost = InetAddress.getLocalHost.getHostAddress
 
   def replaceLocalhost(config: Config): Config = {
-    val seeds = config.getStringList("akka.cluster.seed-nodes").map(s => s.replace("127.0.0.1", localhost))
+    val seeds = config.getStringList("akka.cluster.seed-nodes").asScala.map(s => s.replace("127.0.0.1", localhost)).asJava
     config.withValue("akka.remote.netty.tcp.hostname", ConfigValueFactory.fromAnyRef(localhost))
       .withValue("akka.cluster.seed-nodes", ConfigValueFactory.fromIterable(seeds))
   }
 
-  def convertToMap(config: Config): Map[String, String] =
-    config.entrySet().map(entry => (entry.getKey, entry.getValue.unwrapped().toString())).toMap
+  def convertToMap(config: Config): Map[String, Object] =
+    config.entrySet().asScala.map(entry => (entry.getKey, entry.getValue.unwrapped().toString)).toMap
 }

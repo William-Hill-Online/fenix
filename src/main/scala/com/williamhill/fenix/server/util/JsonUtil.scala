@@ -1,6 +1,6 @@
 package com.williamhill.fenix.server.util
 
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.{ JsValue, Json }
 
 object JsonUtil {
 
