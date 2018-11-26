@@ -14,50 +14,52 @@ resolvers ++= Seq(
   "william hill nexus" at "https://nexus.dtc.prod.williamhill.plc:8443/repository/maven-public/"
 )
 
-val scalaVers = "2.11.8"
-val scalaBinaryVers = "2.11"
-val akkaVersion = "2.4.4"
+val scalaVers = "2.12.7"
+val scalaBinaryVers = "2.12"
+val akkaVersion = "2.5.18"
 //val akkaStreamingVers = "2.4.2"
-val playVers = "2.4.6"
+val playVers = "2.6.10"
 
 mainClass in Compile := Some("com.williamhill.fenix.server.FenixMain")
 
 // Dependencies
 val rootDependencies = Seq(
-  "de.heikoseeberger" %% "constructr-akka" % "0.12.0",
-  "de.heikoseeberger" %% "constructr-coordination-etcd" % "0.12.0",
+//  "de.heikoseeberger" %% "constructr-akka" % "0.12.0",
+//  "de.heikoseeberger" %% "constructr-coordination-etcd" % "0.12.0",
   "joda-time" % "joda-time" % "2.8.2",
   "com.typesafe" % "config" % "1.3.0",
-  "com.typesafe.scala-logging" %% "scala-logging" % "3.1.0",
-  "com.websudos" %% "phantom-dsl" % "1.11.0",
+  "com.typesafe.scala-logging" %% "scala-logging" % "3.9.0",
+//  "com.websudos" %% "phantom-dsl" % "1.11.0",
   "org.slf4j" % "slf4j-api" % "1.7.12",
   "org.slf4j" % "slf4j-log4j12" % "1.7.12",
   "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.4",
   "org.scala-lang" % "scala-reflect" % scalaVers,
-  "com.github.krasserm" %% "akka-persistence-cassandra" % "0.6",
   "org.iq80.leveldb" % "leveldb" % "0.7",
   "org.fusesource.leveldbjni" % "leveldbjni-all" % "1.8",
-  "com.github.romix.akka" %% "akka-kryo-serialization" % "0.4.0",
   "com.typesafe.akka" %% "akka-cluster" % akkaVersion,
   "com.typesafe.akka" %% "akka-cluster-sharding" % akkaVersion,
   "com.typesafe.akka" %% "akka-cluster-metrics" % akkaVersion,
   "com.typesafe.akka" %% "akka-cluster-tools" % akkaVersion,
   "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
-  //  "com.typesafe.akka" %% "akka-stream-experimental" % akkaStreamingVers,
-  //  "com.typesafe.akka" %% "akka-http-core-experimental" % akkaStreamingVers,
-  //  "com.typesafe.akka" %% "akka-http-experimental" % akkaStreamingVers,
-  //  "com.typesafe.akka" %% "akka-http-xml-experimental" % akkaStreamingVers,
+  "com.typesafe.akka" %% "akka-persistence" % akkaVersion,
+  "com.typesafe.akka" %% "akka-persistence-cassandra" % "0.88",
+  "com.github.romix.akka" %% "akka-kryo-serialization" % "0.5.2",
+  "com.typesafe.akka" %% "akka-stream" % "2.5.18",
+  "com.typesafe.akka" %% "akka-http" % "10.1.5",
+
   "com.typesafe.play" %% "play-json" % playVers,
-  "io.reactivex" %% "rxscala" % "0.26.0",
+  "io.reactivex" %% "rxscala" % "0.26.5",
   "org.apache.kafka" % "kafka-clients" % "0.9.0.1"
 )
 
 val testDependencies = Seq(
-  "org.specs2" %% "specs2-core" % "3.6.5" % "test",
-  "org.specs2" %% "specs2-scalacheck" % "3.6.5" % "test",
-  "org.scalatest" %% "scalatest" % "2.2.6" % "test",
-  "org.scalamock" %% "scalamock-scalatest-support" % "3.2.2" % "test",
-  "com.typesafe.akka" %% "akka-testkit" % akkaVersion % "test"
+  "org.specs2" %% "specs2-core" % "4.3.5" % "test",
+  "org.specs2" %% "specs2-scalacheck" % "4.3.5" % "test",
+  "org.scalatest" %% "scalatest" % "3.0.5" % "test",
+  "org.scalamock" %% "scalamock-scalatest-support" % "3.6.0" % "test",
+  "com.typesafe.akka" %% "akka-testkit" % akkaVersion % "test",
+  "com.typesafe.akka" %% "akka-http-testkit" % "10.1.5" % Test,
+  "com.typesafe.akka" %% "akka-stream-testkit" % "2.5.18" % Test
 )
 
 val dependencies = rootDependencies ++ testDependencies
