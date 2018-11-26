@@ -12,28 +12,28 @@ Each frame is encoded as a JSON array where the first element is always a Number
 
 |Operation Code|Operation Name|Descriptionn|Arguments|Example|
 |--------------|--------------|------------|---------|-------|
-| 1   | FenixCreateEntityCmd | Create a new Key/Value entity into the cache | entityId: String, data: Map\[String, Any\] |\[1,"OB_EV54952","{"username":"OB_EV54952","password":"secret"}"\] |
-| 2   | FenixUpdateCmd | Update a specific field of an entity | entityId: String, field: String, value: Any | \[2,"OB_EV54952","password","newsecret"\]   |
+| 1   | FenixCreateEntityCmd | Create a new Key/Value entity into the cache | entityId: String, data: Map\[String, Any\] |\[1,"OB_EV54952","{"eventId":"OB_EV54952","homeScore":"0"}"\] |
+| 2   | FenixUpdateCmd | Update a specific field of an entity | entityId: String, field: String, value: Any | \[2,"OB_EV54952","homeScore","1"\]   |
 | 3   | FenixRemoveCmd | Remove a Key/Value entity from the cache | entityId: String | \[3,"OB_EV54952"\] |
-| 4   | FenixAddCmd    | Add a value to a List field of an entity. If the field is not a list after this operation it is automatically converted into a Seq\[Any\] | entityId: String, field: String, values: Set\[Any\] | \[4,"OB_EV54952","cars",\["DJR0707","CH0036"\]\] |
-| 5   | FenixDelCmd    | Remove a value from a List field of the specified entity | entityId: String, field: String, values: Set\[Any\] | \[5,"OB_EV54952","cars",\["CH0036"\]\] |
+| 4   | FenixAddCmd    | Add a value to a List field of an entity. If the field is not a list after this operation it is automatically converted into a Seq\[Any\] | entityId: String, field: String, values: Set\[Any\] | \[4,"OB_EV54952","homePlayers",\["Edgar Davids","Alessandro Del Piero","Luis Figo"\]\] |
+| 5   | FenixDelCmd    | Remove a value from a List field of the specified entity | entityId: String, field: String, values: Set\[Any\] | \[5,"OB_EV54952","homePlayers",\["Alessandro Del Piero"\]\] |
 | 6   | FenixClearCmd  | Clear the Value of a specific entity. Differently from FenixRemoveCmd, this operation set the value of the entity to an empty map but it doesn't remove the entity | entityId: String | \[6,"OB_EV54952"\] |
-| 7   | FenixMergeEntityCmd  | Merges the actual entity with the provided Key/Value map. Whether to preserve or not former keys is optional. | entityId: String, data: Map\[String, Any\], preserve: Boolean | \[7,"OB_EV54952",{"username":"OB_EV54952","password":"anothernewsecret"}, false\] |
+| 7   | FenixMergeEntityCmd  | Merges the actual entity with the provided Key/Value map. Whether to preserve or not former keys is optional. | entityId: String, data: Map\[String, Any\], preserve: Boolean | \[7,"OB_EV54952",{"eventId":"OB_EV54952","homeScore":"2"}, false\] |
 | 10  | FenixGetEntityReq  | Given the entityId returns the value associated to that entityId | entityId: String | \[10,"OB_EV54952"\] |
-| 11  | FenixGetEntityResp | Is the response message for request operation code 10 | offset: Long, entityId: String, data: Map\[String, Any\] | [11,1001,"OB_EV54952","{"username":"OB_EV54952","password":"secret"}"\] |
-| 12  | FenixGetEntityFieldReq | Request the value of a specific field of an entity | entityId: String, field: String | \[12,"OB_EV54952","password"\] |
-| 13  | FenixGetEntityFieldResp | Response message for oepration code 12 | offset: Long, entityId: String, field: String, value: Any | \[13,1002,"OB_EV54952","password","secret"\] |
-| 20  | FenixTopicSubscribe | Subscribes for event associated to a specific topic. A topic can be an entityId or a field of an entityId (entityId/field) | topic: String | \[20,"OB_EV54952"\] or \[20,"OB_EV54952/password"\] |
-| 21  | FenixTopicSubscribeAck |Ackowledge message associated to a subscribe request op. code 20 | topic: String | \[21,"OB_EV54952"\] or \[21,"OB_EV54952/password"\] |
-| 22  | FenixTopicUnsubscribe | Remove the subscription from a topic | topic: String | \[22,"OB_EV54952"\] or \[22,"OB_EV54952/password"\] |
-| 23  | FenixTopicUnsubscribeAck | Ackowledge message associated to a unsubscribe request op. code 21 | topic: String | \[23,"OB_EV54952"\] or \[23,"OB_EV54952/password"\] |
-| 101 | FenixCreateEntityEvent | Notification event associated to command op. code 1 | offset: Long, entityId: String, data: Map\[String, Any\] |\[101,1002,"OB_EV54952","{"username":"OB_EV54952","password":"secret"}"\] |
-| 102 | FenixUpdateEvent | Notification event associated to command op. code 2 | offset: Long, entityId: String, field: String, value: Any | \[102,1003,"OB_EV54952","password","newsecret"\]   |
+| 11  | FenixGetEntityResp | Is the response message for request operation code 10 | offset: Long, entityId: String, data: Map\[String, Any\] | [11,1001,"OB_EV54952","{"eventId":"OB_EV54952","homeScore":"2"}"\] |
+| 12  | FenixGetEntityFieldReq | Request the value of a specific field of an entity | entityId: String, field: String | \[12,"OB_EV54952","homeScore"\] |
+| 13  | FenixGetEntityFieldResp | Response message for oepration code 12 | offset: Long, entityId: String, field: String, value: Any | \[13,1002,"OB_EV54952","homeScore","2"\] |
+| 20  | FenixTopicSubscribe | Subscribes for event associated to a specific topic. A topic can be an entityId or a field of an entityId (entityId/field) | topic: String | \[20,"OB_EV54952"\] or \[20,"OB_EV54952/homeScore"\] |
+| 21  | FenixTopicSubscribeAck |Ackowledge message associated to a subscribe request op. code 20 | topic: String | \[21,"OB_EV54952"\] or \[21,"OB_EV54952/homeScore"\] |
+| 22  | FenixTopicUnsubscribe | Remove the subscription from a topic | topic: String | \[22,"OB_EV54952"\] or \[22,"OB_EV54952/homeScore"\] |
+| 23  | FenixTopicUnsubscribeAck | Ackowledge message associated to a unsubscribe request op. code 21 | topic: String | \[23,"OB_EV54952"\] or \[23,"OB_EV54952/homeScore"\] |
+| 101 | FenixCreateEntityEvent | Notification event associated to command op. code 1 | offset: Long, entityId: String, data: Map\[String, Any\] |\[101,1002,"OB_EV54952","{"eventId":"OB_EV54952","homeScore":"2"}"\] |
+| 102 | FenixUpdateEvent | Notification event associated to command op. code 2 | offset: Long, entityId: String, field: String, value: Any | \[102,1003,"OB_EV54952","homeScore","3"\]   |
 | 103 | FenixRemoveEvent | Notification event associated to command op. code 3 | offset: Long, entityId: String | \[103,1004,"OB_EV54952"\] |
-| 104 | FenixAddEvent    | Notification event associated to command op. code 4 | offset: Long, entityId: String, field: String, values: Set\[Any\] | \[104,1005,"OB_EV54952","cars",\["DJR0707","CH0036"\]\] |
-| 105 | FenixDelEvent    | Notification event associated to command op. code 5 | offset: Long, entityId: String, field: String, values: Set\[Any\] | \[105,1006,"OB_EV54952","cars",\["CH0036"\]\] |
+| 104 | FenixAddEvent    | Notification event associated to command op. code 4 | offset: Long, entityId: String, field: String, values: Set\[Any\] | \[104,1005,"OB_EV54952","homePlayers",\["Edgar Davids","Alessandro Del Piero","Luis Figo"\]\] |
+| 105 | FenixDelEvent    | Notification event associated to command op. code 5 | offset: Long, entityId: String, field: String, values: Set\[Any\] | \[105,1006,"OB_EV54952","homePlayers",\["Luis Figo"\]\] |
 | 106 | FenixClearEvent  | Notification event associated to command op. code 6 | offset: Long, entityId: String | \[106,1007,"OB_EV54952"\] |
-| 107 | FenixMergeEntityEvent  | Notification event associated to command op. code 7 containing the keys to be updated with their values and (optionally) the keys to be deleted| offset: Long, entityId: String, updates: Map\[String, Any\], deletes: List\[String\] | \[107,1007,"OB_EV54952",{"password":"anothernewsecret"},\["cars"\]\] |
+| 107 | FenixMergeEntityEvent  | Notification event associated to command op. code 7 containing the keys to be updated with their values and (optionally) the keys to be deleted| offset: Long, entityId: String, updates: Map\[String, Any\], deletes: List\[String\] | \[107,1007,"OB_EV54952",{"homeScore":"3"},\["homePlayers"\]\] |
 
 Examples
 --------
@@ -45,15 +45,15 @@ $>telnet $FENIX_HOST $FENIX_TCP_PORT
 
 ## Create an entity
 Entity name: "OB_EV54952"
-Entity field: "cars", value: "0711DJR"
+Entity field: "homePlayers", value: "0711DJR"
 ```json
-[1,"OB_EV54952",{"cars":"0711DJR"}]
+[1,"OB_EV54952",{"homeScore":"0"}]
 ```
 
 ## Fetch an entity
 ```json
 [10,"OB_EV54952"]
-[11,0,"OB_EV54952",{"cars":"0711DJR"}] //--> RESPONSE
+[11,0,"OB_EV54952",{"homeScore":"0"}] //--> RESPONSE
 ```
 
 ## Subscribe to updates for OB_EV54952
@@ -64,44 +64,44 @@ Entity field: "cars", value: "0711DJR"
 
 ## Add elements to normal field (Transform it into array field)
 ```json
-[4,"OB_EV54952","cars",["0028CHH","4432LKJ"]]
-[104,1,"OB_EV54952","cars",["0028CHH","4432LKJ"]] //--> NOTIFICATION AFTER SUBSCRIPTION TO OB_EV54952
+[4,"OB_EV54952","homePlayers",["Luis Figo","Alessandro Del Piero","Zlatan Ibrahimović"]]
+[104,1,"OB_EV54952","homePlayers",["Luis Figo","Alessandro Del Piero","Zlatan Ibrahimović"]] //--> NOTIFICATION AFTER SUBSCRIPTION TO OB_EV54952
 ```
 
 ## Remove elements from array field
 ```json
-[5,"OB_EV54952","cars",["4432LKJ"]]
-[105,2,"OB_EV54952","cars",["4432LKJ"]] //--> NOTIFICATION AFTER SUBSCRIPTION TO OB_EV54952
+[5,"OB_EV54952","homePlayers",["Luis Figo"]]
+[105,2,"OB_EV54952","homePlayers",["Luis Figo"]] //--> NOTIFICATION AFTER SUBSCRIPTION TO OB_EV54952
 [10,"OB_EV54952"] //<-- FETCH REQUEST
-[11,2,"OB_EV54952",{"cars":["0711DJR","0028CHH"]}] //--> FETCH RESPONSE
+[11,2,"OB_EV54952",{"homePlayers":["Zlatan Ibrahimović","Alessandro Del Piero"]}] //--> FETCH RESPONSE
 ```
 
 ## Delete a field
 ```json
-[2,"OB_EV54952","gender","male"] //<-- SET A NEW FIELD FOR ENTITY OB_EV54952
-[102,3,"OB_EV54952","gender","male"] //--> EVENT NOTIFICATION
+[2,"OB_EV54952","homeScore","0"] //<-- SET A NEW FIELD FOR ENTITY OB_EV54952
+[102,3,"OB_EV54952","homeScore","0"] //--> EVENT NOTIFICATION
 [10,"OB_EV54952"] //<-- FETCH REQUEST
-[11,3,"OB_EV54952",{"cars":["0711DJR","0028CHH"],"gender":"male"}] //--> FETCH RESPONSE
-[3,"OB_EV54952","gender"] //<-- REMOVE FIELD COMMAND
-[103,4,"OB_EV54952","gender"] //--> EVENT NOTIFICATION
+[11,3,"OB_EV54952",{"homePlayers":["Zlatan Ibrahimović","Alessandro Del Piero"],"homeScore":"0"}] //--> FETCH RESPONSE
+[3,"OB_EV54952","homeScore"] //<-- REMOVE FIELD COMMAND
+[103,4,"OB_EV54952","homeScore"] //--> EVENT NOTIFICATION
 [10,"OB_EV54952"] //<-- FETCH REQUEST
-[11,4,"OB_EV54952",{"cars":["0711DJR","0028CHH"]}] //--> FETCH RESPONSE
+[11,4,"OB_EV54952",{"homePlayers":["Zlatan Ibrahimović","Alessandro Del Piero"]}] //--> FETCH RESPONSE
 ```
 
 ## Merge with a key/value map (preserving existing keys not present in the key/value map)
 ```json
-[7,"OB_EV54952",{"gender":"male","age":35},true] //<-- MERGE
-[107,5,"OB_EV54952",{"gender":"male","age":35}] //--> EVENT NOTIFICATION
+[7,"OB_EV54952",{"homeScore":"0","awayScore":"1"},true] //<-- MERGE
+[107,5,"OB_EV54952",{"homeScore":"0","awayScore":"1"}] //--> EVENT NOTIFICATION
 [10,"OB_EV54952"] //<-- FETCH REQUEST
-[11,5,"OB_EV54952",{"cars":["0711DJR","0028CHH"],"gender":"male","age":35}] //<-- FETCH RESPONSE
+[11,5,"OB_EV54952",{"homePlayers":["Zlatan Ibrahimović","Alessandro Del Piero"],"homeScore":"0","awayScore":"1"}] //<-- FETCH RESPONSE
 ```
 
 ## Merge with a snapshot (deleting existing keys not present in the snapshot)
 ```json
-[7,"OB_EV54952",{"age":37,"gender":"male"}] //<-- OVERRIDE WITH SNAPSHOT
-[107,6,"OB_EV54952",{"age":37},["cars"]] //--> EVENT NOTIFICATION
+[7,"OB_EV54952",{"homeScore":"0","awayScore":"1"}] //<-- OVERRIDE WITH SNAPSHOT
+[107,6,"OB_EV54952",{"awayScore":"1"},["homePlayers"]] //--> EVENT NOTIFICATION
 [10,"OB_EV54952"] //<-- FETCH REQUEST
-[11,6,"OB_EV54952",{"gender":"male","age":37}] //<-- FETCH RESPONSE
+[11,6,"OB_EV54952",{"homeScore":"0","awayScore":"1"}] //<-- FETCH RESPONSE
 ```
 
 ## Clear an entity
