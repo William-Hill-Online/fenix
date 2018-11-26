@@ -1,9 +1,12 @@
 Fenix
 ======
 
+Fenix is rebuild from a dust of [Fulgor](http://gitlab.williamhill-dev.local/omnia/fulgor)
+
 Introduction
 ------------
-Fenix is distributed cache.
+Fenix is distributed cache. However it's' universal the main ambition is to provide high scalable replacement for Diffusion. 
+Fenix currently support low-level TCP interface and the same functionality will be exposed by Websocket interaface.
 
 TCP Protocol
 ------------
@@ -121,12 +124,12 @@ $>sbt docker:publishLocal
 This will create:
 ```bash
 REPOSITORY                            TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
-fenix                           1.0.0-SNAPSHOT      b0cc1dee032d        3 seconds ago       707.3 MB
+fenix                           0.0.1-SNAPSHOT      b0cc1dee032d        3 seconds ago       707.3 MB
 ```
 
 The container can be started as simple as:
 ```bash
-$>docker run --name=fenix fenix:1.0.0-SNAPSHOT
+$>docker run --name=fenix fenix:0.0.1-SNAPSHOT
 [INFO] [11/14/2015 17:06:40.341] [main] [akka.remote.Remoting] Starting remoting
 [INFO] [11/14/2015 17:06:40.515] [main] [akka.remote.Remoting] Remoting started; listening on addresses :[akka.tcp://fenix@127.0.0.1:2551]
 [INFO] [11/14/2015 17:06:40.535] [main] [akka.cluster.Cluster(akka://fenix)] Cluster Node [akka.tcp://fenix@127.0.0.1:2551] - Starting up...
