@@ -1,9 +1,12 @@
 Fenix
 ======
 
+Fenix is rebuild from a dust of [Fulgor](http://gitlab.williamhill-dev.local/omnia/fulgor)
+
 Introduction
 ------------
-Fenix is distributed cache.
+Fenix is distributed cache. However it's' universal the main ambition is to provide high scalable replacement for Diffusion. 
+Fenix currently support low-level TCP interface and the same functionality will be exposed by Websocket interaface.
 
 TCP Protocol
 ------------
