@@ -121,7 +121,7 @@ $>sbt docker:publishLocal
 This will create:
 ```bash
 REPOSITORY                            TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
-fenix                           1.0.0-SNAPSHOT      b0cc1dee032d        3 seconds ago       707.3 MB
+fenix                           0.0.1-SNAPSHOT      b0cc1dee032d        3 seconds ago       707.3 MB
 ```
 
 The container can be started as simple as:
