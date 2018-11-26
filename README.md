@@ -126,7 +126,7 @@ fenix                           0.0.1-SNAPSHOT      b0cc1dee032d        3 second
 
 The container can be started as simple as:
 ```bash
-$>docker run --name=fenix fenix:1.0.0-SNAPSHOT
+$>docker run --name=fenix fenix:0.0.1-SNAPSHOT
 [INFO] [11/14/2015 17:06:40.341] [main] [akka.remote.Remoting] Starting remoting
 [INFO] [11/14/2015 17:06:40.515] [main] [akka.remote.Remoting] Remoting started; listening on addresses :[akka.tcp://fenix@127.0.0.1:2551]
 [INFO] [11/14/2015 17:06:40.535] [main] [akka.cluster.Cluster(akka://fenix)] Cluster Node [akka.tcp://fenix@127.0.0.1:2551] - Starting up...
