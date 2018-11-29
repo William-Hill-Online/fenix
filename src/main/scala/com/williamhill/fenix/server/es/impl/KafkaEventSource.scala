@@ -13,7 +13,7 @@ class KafkaEventSource(settings: Config) extends EventSource(settings) with Lazy
 
   override def createSource(): Observable[String] = Observable.create[String] { observer =>
     val topics = settings.getStringList("topics")
-    val consumer = new KafkaConsumer[String, String](convertToMap(settings).asJava)
+    val consumer = new KafkaConsumer[String, String](convertToMap(settings).asInstanceOf[Map[String,Object]].asJava)
     consumer.subscribe(topics)
     import ExecutionContext.Implicits.global
     var running = true
