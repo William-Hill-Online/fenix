@@ -10,7 +10,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 object FenixTcpClient {
   def main(args: Array[String]): Unit = {
-    val socket = new Socket("192.168.99.100", 7777)
+    val socket = new Socket("127.0.0.1", 7777)
     val out = new DataOutputStream(socket.getOutputStream)
     val stdIn = new BufferedReader(new InputStreamReader(System.in))
     var userInput = ""
