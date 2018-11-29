@@ -6,14 +6,14 @@ import com.williamhill.fenix.server.es.EventSource
 import org.apache.kafka.clients.consumer.KafkaConsumer
 import rx.lang.scala.{ Observable, Subscription }
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import scala.concurrent.{ ExecutionContext, Future }
 
 class KafkaEventSource(settings: Config) extends EventSource(settings) with LazyLogging {
 
   override def createSource(): Observable[String] = Observable.create[String] { observer =>
     val topics = settings.getStringList("topics")
-    val consumer = new KafkaConsumer[String, String](convertToMap(settings))
+    val consumer = new KafkaConsumer[String, String](convertToMap(settings).asJava)
     consumer.subscribe(topics)
     import ExecutionContext.Implicits.global
     var running = true
@@ -21,7 +21,7 @@ class KafkaEventSource(settings: Config) extends EventSource(settings) with Lazy
     Future {
       while (running) {
         try {
-          val records = consumer.poll(100)
+          val records = consumer.poll(100).asScala
           records.foreach(record => observer.onNext(record.value))
         } catch {
           case err: Throwable =>
@@ -39,6 +39,6 @@ class KafkaEventSource(settings: Config) extends EventSource(settings) with Lazy
   }
 
   private def convertToMap(config: Config): Map[String, String] =
-    config.entrySet().map(entry => (entry.getKey, entry.getValue.unwrapped().toString())).toMap
+    config.entrySet().asScala.map(entry => (entry.getKey, entry.getValue.unwrapped().toString)).toMap
 
 }

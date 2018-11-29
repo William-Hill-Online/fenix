@@ -1,10 +1,9 @@
 package com.williamhill.fenix.server.config
 
 import com.typesafe.config.Config
-import com.typesafe.config.ConfigFactory
 import scala.concurrent.duration.FiniteDuration
 import java.util.concurrent.TimeUnit
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import scala.util.Try
 import com.williamhill.fenix.server.es.EventSourceDefinition
 import com.williamhill.fenix.server.es.EventSource
@@ -29,7 +28,7 @@ class FenixConfig(config: Config) {
    * es registry
    */
   val eventSources: Map[String, EventSourceDefinition] = {
-    val es = config.getObjectList("fenix.es")
+    val es = config.getObjectList("fenix.es").asScala
     es.map { obj =>
       val objConfig = obj.toConfig
       val id = objConfig.getString("id")

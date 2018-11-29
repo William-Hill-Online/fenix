@@ -45,7 +45,7 @@ class FenixEntityActor(updatesBeforeSnapshot: Long, passivation: Duration, outpu
   }).orElse(handleSnapshotSaving)
     .orElse(unknown)
 
-  override def receiveRecover: Receive = LoggingReceive {
+  override def receiveRecover: Receive = (LoggingReceive {
     case RecoveryCompleted => log.info(s"entity: $entityId fully recovered")
     case SnapshotOffer(_, FenixEntitySnapshot(offset, snapshot)) =>
       log.info(s"recovering snapshot: $snapshot"); this.data = snapshot; this.offset = offset
@@ -53,7 +53,7 @@ class FenixEntityActor(updatesBeforeSnapshot: Long, passivation: Duration, outpu
       log.info(s"recovering with event: $event")
       handleEvent(event)
       incrementOffset()
-  }.orElse(unknown)
+  }: Receive).orElse(unknown)
 
   private def processCmd: FenixCmd => FenixEvent = {
     case FenixCreateEntityCmd(_, input) => FenixCreateEntityEvent(offset, entityId, input)

@@ -13,7 +13,7 @@ import com.williamhill.fenix.server.channel.messages.{ ChannelSubscribe, Channel
 import com.williamhill.fenix.server.messages._
 import org.apache.kafka.clients.producer.{ KafkaProducer, ProducerRecord }
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import scala.concurrent.duration._
 
 trait OutputChannel {
@@ -28,7 +28,7 @@ class KafkaOutputChannel(config: Config) extends OutputChannel with LazyLogging 
 
   val streamName = config.getString("stream")
   val converter = WHOGatewayConverter
-  val producer = new KafkaProducer[String, String](ConfigUtil.convertToMap(config.getConfig("settings")))
+  val producer = new KafkaProducer[String, String](ConfigUtil.convertToMap(config.getConfig("settings")).asJava)
 
   override def send(msg: Any, client: Option[(String, String)]) = msg match {
     case resp: FenixResp => deliverMessage(resp, client)
@@ -76,10 +76,10 @@ class OutputChannelActor(output: OutputChannel, inputChannelProxy: ActorRef, fil
     case other => stash()
   }
 
-  def running: Receive = LoggingReceive {
+  def running: Receive = (LoggingReceive {
     case resp: FenixResp => sendResponse(resp)
     case evt: FenixEvent => sendIfSubscribed(evt)
-  }.orElse(handleSubscriptions).orElse {
+  }: Receive).orElse(handleSubscriptions).orElse {
     case any => log.warning(s"Unknown message: $any")
   }
 

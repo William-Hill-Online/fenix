@@ -20,20 +20,20 @@ class FenixServerActor(config: FenixConfig) extends Actor with ActorLogging {
   val mediator = DistributedPubSub(context.system).mediator
   implicit val timeout = Timeout(config.timeoutBootstrap)
 
-  def running: Receive = LoggingReceive {
+  def running: Receive = (LoggingReceive {
     case FenixStop =>
       log.info("Terminating distributed cluster")
       context stop self
       log.info("Distributed cluster terminated")
-  }.orElse(unmanaged)
+  }: Receive).orElse(unmanaged)
 
-  def receive: Receive = LoggingReceive {
+  def receive: Receive = (LoggingReceive {
     case FenixStart =>
       log.info("Starting distributed cluster")
       sender ! start()
       log.info("Distributed cluster started")
       context become running
-  }.orElse(unmanaged)
+  }: Receive).orElse(unmanaged)
 
   private def unmanaged: Receive = {
     case msg => log.warning(s"Unmanaged message: $msg")

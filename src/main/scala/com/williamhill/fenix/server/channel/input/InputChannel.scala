@@ -48,7 +48,7 @@ class InputChannelActor(cluster: ActorRef, input: InputChannel, config: Config) 
 
   override def persistenceId: String = "fenix_input_channel"
 
-  override def receiveRecover: Receive = LoggingReceive {
+  override def receiveRecover: Receive = (LoggingReceive {
     case RecoveryCompleted => log.info("Input channel fully recovered with subscriptions for {} topics", subscriptionsMap.size)
     case SnapshotOffer(metadata, InputChannelSnapshot(subscriptions)) =>
       log.info("recovering snapshot {}", metadata, subscriptions.size)
@@ -61,15 +61,15 @@ class InputChannelActor(cluster: ActorRef, input: InputChannel, config: Config) 
       log.debug(s"recovering with unsubscription request: $unsubsEvent")
       incrementSnapshotCounter()
       subscriptionsMap = subscriptionsMap.withoutSubscription(unsubsEvent.topic, unsubsEvent.client)
-  }.orElse(unknown)
+  }: Receive).orElse(unknown)
 
-  override def receiveCommand: Receive = LoggingReceive {
+  override def receiveCommand: Receive = (LoggingReceive {
     case msg @ WHOGwFetchReq(topic, routerId, clientId) =>
       cluster ! FenixOutputEntityReq(topic, (routerId, clientId))
     case msg @ ChannelSubscriptionMapReq() =>
       log.info("Subscriptions Map requested by {}", sender)
       sender ! ChannelSubscriptionMapResp(subscriptionsMap)
-  }.orElse(handleWHOGwSubscriptionsCmds).orElse(handleSnapshotSaving).orElse(unknown)
+  }: Receive).orElse(handleWHOGwSubscriptionsCmds).orElse(handleSnapshotSaving).orElse(unknown)
 
   def handleWHOGwSubscriptionsCmds: Receive = LoggingReceive {
     // Async persistence as: persisting subscriptions is not critical and execution order of the callbacks are guaranteed

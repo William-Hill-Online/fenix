@@ -78,7 +78,7 @@ val compileSettings = Seq(
   scalacOptions ++= Seq(
     "-deprecation",
     "-encoding", "UTF-8",
-    "-target:jvm-1.7",
+    "-target:jvm-1.8",
     "-feature",
     "-language:_",
     "-unchecked",
