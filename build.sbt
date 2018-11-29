@@ -24,12 +24,9 @@ mainClass in Compile := Some("com.williamhill.fenix.server.FenixMain")
 
 // Dependencies
 val rootDependencies = Seq(
-//  "de.heikoseeberger" %% "constructr-akka" % "0.12.0",
-//  "de.heikoseeberger" %% "constructr-coordination-etcd" % "0.12.0",
   "joda-time" % "joda-time" % "2.8.2",
   "com.typesafe" % "config" % "1.3.0",
   "com.typesafe.scala-logging" %% "scala-logging" % "3.9.0",
-//  "com.websudos" %% "phantom-dsl" % "1.11.0",
   "org.slf4j" % "slf4j-api" % "1.7.12",
   "org.slf4j" % "slf4j-log4j12" % "1.7.12",
   "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.4",
@@ -42,11 +39,11 @@ val rootDependencies = Seq(
   "com.typesafe.akka" %% "akka-cluster-tools" % akkaVersion,
   "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
   "com.typesafe.akka" %% "akka-persistence" % akkaVersion,
+  "com.typesafe.akka" %% "akka-persistence-query" % akkaVersion,
   "com.typesafe.akka" %% "akka-persistence-cassandra" % "0.88",
   "com.github.romix.akka" %% "akka-kryo-serialization" % "0.5.2",
   "com.typesafe.akka" %% "akka-stream" % "2.5.18",
   "com.typesafe.akka" %% "akka-http" % "10.1.5",
-
   "com.typesafe.play" %% "play-json" % playVers,
   "io.reactivex" %% "rxscala" % "0.26.5",
   "org.apache.kafka" % "kafka-clients" % "0.9.0.1"
@@ -113,7 +110,6 @@ val formatSettings = scalariformPreferences.apply(
     .setPreference(MultilineScaladocCommentsStartOnFirstLine, false)
     .setPreference(PlaceScaladocAsterisksBeneathSecondAsterisk, false)
     .setPreference(PreserveSpaceBeforeArguments, false)
-    .setPreference(PreserveDanglingCloseParenthesis, true)
     .setPreference(RewriteArrowSymbols, false)
     .setPreference(SpaceBeforeColon, false)
     .setPreference(SpaceInsideBrackets, false)
