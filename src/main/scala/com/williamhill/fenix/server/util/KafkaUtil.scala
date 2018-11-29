@@ -2,7 +2,7 @@ package com.williamhill.fenix.server.util
 
 import com.typesafe.config.Config
 import org.apache.kafka.clients.consumer.KafkaConsumer
-import rx.lang.scala.{ Observable, Subscription }
+import rx.lang.scala.Observable
 import collection.JavaConverters._
 
 import scala.concurrent.{ ExecutionContext, Future }
