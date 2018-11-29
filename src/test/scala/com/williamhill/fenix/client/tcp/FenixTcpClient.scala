@@ -13,7 +13,7 @@ object FenixTcpClient {
     val socket = new Socket("127.0.0.1", 7777)
     val out = new DataOutputStream(socket.getOutputStream)
     val stdIn = new BufferedReader(new InputStreamReader(System.in))
-    var userInput = ""
+    val userInput = ""
 
     import ExecutionContext.Implicits.global
 
@@ -47,8 +47,6 @@ object FenixTcpClient {
       val lengthArray = ByteBuffer.allocate(4).putInt(userInput.length).array()
       val toSend = lengthArray ++ userInput.getBytes
       out.write(toSend)
-      //      out.write(util.Arrays.copyOfRange(toSend, 0, 4))
-      //      out.write(util.Arrays.copyOfRange(toSend, 4, toSend.length))
     } while (userInput != null)
   }
 }

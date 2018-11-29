@@ -43,7 +43,6 @@ val rootDependencies = Seq(
   "com.typesafe.akka" %% "akka-persistence-cassandra" % "0.88",
   "com.github.romix.akka" %% "akka-kryo-serialization" % "0.5.2",
   "com.typesafe.akka" %% "akka-stream" % "2.5.18",
-  "com.typesafe.akka" %% "akka-http" % "10.1.5",
   "com.typesafe.play" %% "play-json" % playVers,
   "io.reactivex" %% "rxscala" % "0.26.5",
   "org.apache.kafka" % "kafka-clients" % "0.9.0.1"
@@ -55,7 +54,6 @@ val testDependencies = Seq(
   "org.scalatest" %% "scalatest" % "3.0.5" % "test",
   "org.scalamock" %% "scalamock-scalatest-support" % "3.6.0" % "test",
   "com.typesafe.akka" %% "akka-testkit" % akkaVersion % "test",
-  "com.typesafe.akka" %% "akka-http-testkit" % "10.1.5" % Test,
   "com.typesafe.akka" %% "akka-stream-testkit" % "2.5.18" % Test
 )
 

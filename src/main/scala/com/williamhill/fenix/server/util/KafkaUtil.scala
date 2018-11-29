@@ -9,7 +9,7 @@ import scala.concurrent.{ ExecutionContext, Future }
 
 object KafkaUtil {
 
-  def createSource(inputStreams: Seq[String], settings: Config, pollInterval: Long): Observable[String] = Observable.create[String] { observer =>
+  def createSource(inputStreams: Seq[String], settings: Config, pollInterval: Long): Observable[String] = Observable.apply[String] { observer =>
     val consumer = new KafkaConsumer[String, String](ConfigUtil.convertToMap(settings).asJava)
     consumer.subscribe(inputStreams.asJava)
     import ExecutionContext.Implicits.global
@@ -28,10 +28,6 @@ object KafkaUtil {
       }
       consumer.unsubscribe()
       consumer.close()
-    }
-
-    Subscription {
-      running = false
     }
   }
 

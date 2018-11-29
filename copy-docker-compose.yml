@@ -24,14 +24,14 @@ fenixSeed:
   links:
     - cassandra
 
-fenix:
+fenixNode:
   image: docker-registry.prod.williamhill.plc/martin.hatas/fenix:0.0.1-SNAPSHOT
   restart: always
   expose:
     - "2551"
   environment:
-    - FENIX_SERVERS=127.0.0.1:2551,seed:2551
+    - FENIX_SERVERS=127.0.0.1:2551,fenixNode:2551
     - CASSANDRA=cassandra
   links:
-    - fenixSeed:seed
+    - fenixSeed:fenixNode
     - cassandra

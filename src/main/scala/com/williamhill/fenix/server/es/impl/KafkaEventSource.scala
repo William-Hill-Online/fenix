@@ -4,14 +4,14 @@ import com.typesafe.config.Config
 import com.typesafe.scalalogging.LazyLogging
 import com.williamhill.fenix.server.es.EventSource
 import org.apache.kafka.clients.consumer.KafkaConsumer
-import rx.lang.scala.{ Observable, Subscription }
+import rx.lang.scala.Observable
 
 import scala.collection.JavaConverters._
 import scala.concurrent.{ ExecutionContext, Future }
 
 class KafkaEventSource(settings: Config) extends EventSource(settings) with LazyLogging {
 
-  override def createSource(): Observable[String] = Observable.create[String] { observer =>
+  override def createSource(): Observable[String] = Observable.apply[String] { observer =>
     val topics = settings.getStringList("topics")
     val consumer = new KafkaConsumer[String, String](convertToMap(settings).asInstanceOf[Map[String, Object]].asJava)
     consumer.subscribe(topics)
@@ -29,12 +29,6 @@ class KafkaEventSource(settings: Config) extends EventSource(settings) with Lazy
             observer.onError(err)
         }
       }
-    }
-
-    Subscription {
-      running = false
-      consumer.unsubscribe()
-      consumer.close()
     }
   }
 

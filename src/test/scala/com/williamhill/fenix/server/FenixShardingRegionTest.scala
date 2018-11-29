@@ -23,7 +23,7 @@ class FenixShardingRegionTest extends TestKit(ActorSystem(FenixShardingRegionTes
   cluster.join(cluster.selfAddress)
 
   val fenixShard = FenixShardingRegion(new FenixConfig(FenixShardingRegionTest.config), None)
-  val mediator = DistributedPubSub(system).mediator
+  private val mediator = DistributedPubSub(system).mediator
 
   def subscribeToTopic(topic: String, field: Option[String] = None): Unit = {
     val subscriptionMsg = field match {
@@ -31,7 +31,7 @@ class FenixShardingRegionTest extends TestKit(ActorSystem(FenixShardingRegionTes
       case None => Subscribe(topic, self)
     }
     mediator ! subscriptionMsg
-    val msg = expectMsg(SubscribeAck(subscriptionMsg))
+    expectMsg(SubscribeAck(subscriptionMsg))
   }
 
   def unsubscribeFromTopic(topic: String, field: Option[String] = None): Unit = {
@@ -40,7 +40,7 @@ class FenixShardingRegionTest extends TestKit(ActorSystem(FenixShardingRegionTes
       case None => Unsubscribe(topic, self)
     }
     mediator ! unsubscribeMsg
-    val msg = expectMsg(UnsubscribeAck(unsubscribeMsg))
+    expectMsg(UnsubscribeAck(unsubscribeMsg))
   }
 
   // Test Scenarios:
@@ -49,7 +49,7 @@ class FenixShardingRegionTest extends TestKit(ActorSystem(FenixShardingRegionTes
 
     "bootstrap and answer with empty data to a Fetch Request for non existing entity" in {
       val undefinedEntityId = "undefined"
-      val res = within(7 seconds) {
+      within(7 seconds) {
         fenixShard ! FenixGetEntityReq(undefinedEntityId)
         expectMsg(FenixGetEntityResp(-1, undefinedEntityId, Map()))
       }
@@ -59,7 +59,7 @@ class FenixShardingRegionTest extends TestKit(ActorSystem(FenixShardingRegionTes
       val entityId = "entity_0"
       val value = Map("foo" -> "bar", "collection" -> Map("key" -> "value"))
       subscribeToTopic(entityId)
-      val res = within(2 seconds) {
+      within(2 seconds) {
         fenixShard ! FenixCreateEntityCmd(entityId, value)
         expectMsg(FenixCreateEntityEvent(0, entityId, value))
       }
@@ -69,7 +69,7 @@ class FenixShardingRegionTest extends TestKit(ActorSystem(FenixShardingRegionTes
     "answer with the actual data upon Fetch Request" in {
       val entityId = "entity_0"
       val value = Map("foo" -> "bar", "collection" -> Map("key" -> "value"))
-      val res = within(2 seconds) {
+      within(2 seconds) {
         fenixShard ! FenixGetEntityReq(entityId)
         expectMsg(FenixGetEntityResp(0, entityId, value))
       }
@@ -77,7 +77,7 @@ class FenixShardingRegionTest extends TestKit(ActorSystem(FenixShardingRegionTes
 
     "answer with the actual field value upon Field Fetch Request" in {
       val entityId = "entity_0"
-      val res = within(2 seconds) {
+      within(2 seconds) {
         fenixShard ! FenixGetEntityFieldReq(entityId, "foo")
         expectMsg(FenixGetEntityFieldResp(0, entityId, "foo", Some("bar")))
       }
@@ -88,7 +88,7 @@ class FenixShardingRegionTest extends TestKit(ActorSystem(FenixShardingRegionTes
       val field = "field1"
       val value = "value_updated"
       subscribeToTopic(entityId)
-      val res = within(2 seconds) {
+      within(2 seconds) {
         fenixShard ! FenixUpdateCmd(entityId, field, value)
         expectMsg(FenixUpdateEvent(0, entityId, field, value))
       }
@@ -99,7 +99,7 @@ class FenixShardingRegionTest extends TestKit(ActorSystem(FenixShardingRegionTes
       val entityId = "entity_2"
       val field = "collection"
       subscribeToTopic(entityId)
-      val res = within(2 seconds) {
+      within(2 seconds) {
         fenixShard ! FenixAddCmd(entityId, field, List("value1"))
         expectMsg(FenixAddEvent(0, entityId, field, List("value1")))
         fenixShard ! FenixAddCmd(entityId, field, List("value2", "value3"))
@@ -118,7 +118,7 @@ class FenixShardingRegionTest extends TestKit(ActorSystem(FenixShardingRegionTes
     "update a topic given a new snapshot" in {
       val entityId = "entity_3"
       subscribeToTopic(entityId)
-      val res = within(2 seconds) {
+      within(2 seconds) {
         fenixShard ! FenixMergeEntityCmd(entityId, Map("unused" -> true))
         expectMsg(FenixMergeEntityEvent(0, entityId, MapDelta(Map("unused" -> true), List())))
         fenixShard ! FenixMergeEntityCmd(entityId, Map("used" -> true))
@@ -135,7 +135,7 @@ class FenixShardingRegionTest extends TestKit(ActorSystem(FenixShardingRegionTes
     "merge a topic given a new snapshot when preserving previous structure" in {
       val entityId = "entity_4"
       subscribeToTopic(entityId)
-      val res = within(2 seconds) {
+      within(2 seconds) {
         fenixShard ! FenixMergeEntityCmd(entityId, Map("unused" -> true), true)
         expectMsg(FenixMergeEntityEvent(0, entityId, MapDelta(Map("unused" -> true), List())))
         fenixShard ! FenixMergeEntityCmd(entityId, Map("used" -> true), true)
