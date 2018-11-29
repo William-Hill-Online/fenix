@@ -14,7 +14,7 @@ import com.williamhill.fenix.server.channel.messages.{ ChannelSubscribe, Channel
 import com.williamhill.fenix.server.messages._
 import rx.lang.scala.Observable
 
-trait InputChannel extends Config => Observable[WHOGatewayMessage]
+trait InputChannel extends (Config => Observable[WHOGatewayMessage])
 
 class KafkaInputChannel extends InputChannel with LazyLogging {
 
