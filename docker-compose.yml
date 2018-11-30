@@ -44,6 +44,7 @@ services:
     environment:
       - CASSANDRA=cassandra
       - KAFKA=127.0.0.1
+      - FENIX_SERVERS
     links:
       - cassandra
   #    - kafka
@@ -53,25 +54,31 @@ services:
     restart: always
     expose:
       - "2551"
-      - "7777"
+    ports:
+      - "7776:7777"
     environment:
       - CASSANDRA=cassandra
       - KAFKA=127.0.0.1
+      - FENIX_SERVERS=seed:2551
     links:
       - cassandra
-  #    - kafka
+      - fenix1:seed
+#      - kafka
 
   fenix3:
     image: docker-registry.prod.williamhill.plc/martin.hatas/fenix:1.0.0-SNAPSHOT
     restart: always
     expose:
       - "2551"
-      - "7777"
+    ports:
+      - "7775:7777"
     environment:
       - CASSANDRA=cassandra
       - KAFKA=127.0.0.1
+      - FENIX_SERVERS=seed:2551
     links:
       - cassandra
+      - fenix1:seed
   #    - kafka
 
 # haproxy:
