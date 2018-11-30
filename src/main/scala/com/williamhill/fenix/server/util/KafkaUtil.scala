@@ -15,7 +15,7 @@ object KafkaUtil {
     import ExecutionContext.Implicits.global
     var running = true
 
-    Future {
+    val _ = Future {
       while (running) {
         try {
           val records = consumer.poll(pollInterval).asScala

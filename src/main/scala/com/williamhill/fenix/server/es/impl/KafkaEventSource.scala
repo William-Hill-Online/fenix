@@ -18,7 +18,7 @@ class KafkaEventSource(settings: Config) extends EventSource(settings) with Lazy
     import ExecutionContext.Implicits.global
     var running = true
 
-    Future {
+    val _ = Future {
       while (running) {
         try {
           val records = consumer.poll(100).asScala
