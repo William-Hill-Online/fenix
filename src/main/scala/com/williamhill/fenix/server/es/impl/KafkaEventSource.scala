@@ -1,11 +1,12 @@
 package com.williamhill.fenix.server.es.impl
 
+import java.time.Duration
+import java.time.temporal.ChronoUnit.MILLIS
 import com.typesafe.config.Config
 import com.typesafe.scalalogging.LazyLogging
 import com.williamhill.fenix.server.es.EventSource
 import org.apache.kafka.clients.consumer.KafkaConsumer
 import rx.lang.scala.Observable
-
 import scala.collection.JavaConverters._
 import scala.concurrent.{ ExecutionContext, Future }
 
@@ -21,7 +22,7 @@ class KafkaEventSource(settings: Config) extends EventSource(settings) with Lazy
     val _ = Future {
       while (running) {
         try {
-          val records = consumer.poll(100).asScala
+          val records = consumer.poll(Duration.of(100L, MILLIS)).asScala
           records.foreach(record => observer.onNext(record.value))
         } catch {
           case err: Throwable =>

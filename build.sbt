@@ -42,7 +42,7 @@ val rootDependencies = Seq(
   "com.typesafe.akka" %% "akka-stream" % "2.5.18",
   "com.typesafe.play" %% "play-json" % playVers,
   "io.reactivex" %% "rxscala" % "0.26.5",
-  "org.apache.kafka" % "kafka-clients" % "0.9.0.1"
+  "org.apache.kafka" % "kafka-clients" % "2.1.0"
 )
 
 val testDependencies = Seq(

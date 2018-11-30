@@ -1,10 +1,13 @@
 package com.williamhill.fenix.server.util
 
+import java.time.Duration
+import java.time.temporal.ChronoUnit.MILLIS
+
 import com.typesafe.config.Config
 import org.apache.kafka.clients.consumer.KafkaConsumer
 import rx.lang.scala.Observable
-import collection.JavaConverters._
 
+import collection.JavaConverters._
 import scala.concurrent.{ ExecutionContext, Future }
 
 object KafkaUtil {
@@ -18,7 +21,7 @@ object KafkaUtil {
     val _ = Future {
       while (running) {
         try {
-          val records = consumer.poll(pollInterval).asScala
+          val records = consumer.poll(Duration.of(pollInterval, MILLIS)).asScala
           records.foreach(record => observer.onNext(record.value))
         } catch {
           case err: Throwable =>
