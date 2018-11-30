@@ -12,7 +12,7 @@ cassandra:
     - "9042:9042"
 
 fenixSeed:
-  image: docker-registry.prod.williamhill.plc/martin.hatas/fenix:0.0.1-SNAPSHOT
+  image: docker-registry.prod.williamhill.plc/martin.hatas/fenix:1.0.0-SNAPSHOT
   restart: always
   expose:
     - "2551"
@@ -25,7 +25,7 @@ fenixSeed:
     - cassandra
 
 fenixNode:
-  image: docker-registry.prod.williamhill.plc/martin.hatas/fenix:0.0.1-SNAPSHOT
+  image: docker-registry.prod.williamhill.plc/martin.hatas/fenix:1.0.0-SNAPSHOT
   restart: always
   expose:
     - "2551"

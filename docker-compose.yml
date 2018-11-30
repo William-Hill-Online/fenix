@@ -1,3 +1,6 @@
+version: '3.3'
+
+services:
 #zookeeper:
 #  image: wurstmeister/zookeeper
 #  expose:
@@ -18,45 +21,58 @@
 #  volumes:
 #    - /var/run/docker.sock:/var/run/docker.sock
 
-cassandra:
-  image: cassandra
-  restart: always
-  expose:
-    - "7000"
-    - "7001"
-    - "7199"
-    - "9042"
-    - "9160"
-  ports:
-    - "9160:9160"
-    - "9042:9042"
+  cassandra:
+    image: cassandra
+    restart: always
+    expose:
+      - "7000"
+      - "7001"
+      - "7199"
+      - "9042"
+      - "9160"
+    ports:
+      - "9160:9160"
+      - "9042:9042"
 
-fenixSeed:
-  image: docker-registry.prod.williamhill.plc/martin.hatas/fenix:1.0.0-SNAPSHOT
-  restart: always
-  expose:
-    - "2551"
-  ports:
-    - "7777:7777"
-  environment:
-    - CASSANDRA=cassandra
-    - KAFKA=127.0.0.1
-  links:
-    - cassandra
-#    - kafka
+  fenix1:
+    image: docker-registry.prod.williamhill.plc/martin.hatas/fenix:1.0.0-SNAPSHOT
+    restart: always
+    expose:
+      - "2551"
+    ports:
+      - "7777:7777"
+    environment:
+      - CASSANDRA=cassandra
+      - KAFKA=127.0.0.1
+    links:
+      - cassandra
+  #    - kafka
 
-fenixNode:
-  image: docker-registry.prod.williamhill.plc/martin.hatas/fenix:1.0.0-SNAPSHOT
-  restart: always
-  expose:
-    - "2551"
-    - "7777"
-  environment:
-    - CASSANDRA=cassandra
-    - KAFKA=127.0.0.1
-  links:
-    - cassandra
-#    - kafka
+  fenix2:
+    image: docker-registry.prod.williamhill.plc/martin.hatas/fenix:1.0.0-SNAPSHOT
+    restart: always
+    expose:
+      - "2551"
+      - "7777"
+    environment:
+      - CASSANDRA=cassandra
+      - KAFKA=127.0.0.1
+    links:
+      - cassandra
+  #    - kafka
+
+  fenix3:
+    image: docker-registry.prod.williamhill.plc/martin.hatas/fenix:1.0.0-SNAPSHOT
+    restart: always
+    expose:
+      - "2551"
+      - "7777"
+    environment:
+      - CASSANDRA=cassandra
+      - KAFKA=127.0.0.1
+    links:
+      - cassandra
+  #    - kafka
 
 # haproxy:
 #   image: haproxy:latest

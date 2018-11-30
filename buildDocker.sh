@@ -28,7 +28,7 @@ docker --debug build -t martin.hatas/fenix .
 
 # Tag it and push it to DEV registry.
 #docker tag williamhill/fenix 10.210.201.139:5000/williamhill/fenix
-#docker push docker-registry.prod.williamhill.plc/martin.hatas/fenix:0.0.1-SNAPSHOT
+#docker push docker-registry.prod.williamhill.plc/martin.hatas/fenix:1.0.0-SNAPSHOT
 
 # Clean-up.
 rm -rf $DOCKER_BUILD_DIR
