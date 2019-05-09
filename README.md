@@ -1,8 +1,6 @@
 Fenix
 ======
 
-Fenix is rebuild from a dust of [Fulgor](http://gitlab.williamhill-dev.local/omnia/fulgor)
-
 Introduction
 ------------
 Fenix is distributed cache. However it's' universal the main ambition is to provide high scalable replacement for Diffusion. 
